@@ -10,7 +10,7 @@ gunzip = src:
   builder = writeShellScript
     "gunzip-builder"
     ''
-      ${gzip}/bin/gunzip -c ${src} > $out
+      ${gzip}/bin/gzip -d -c ${src} > $out
     '';
   in
   builtins.derivation {
