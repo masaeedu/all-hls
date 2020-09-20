@@ -3,7 +3,7 @@
 with pkgs;
 
 let
-hashes = builtins.fromJSON (builtins.readFile ./sources.json);
+refs = builtins.fromJSON (builtins.readFile ./sources.json);
 
 gunzip = src:
   let
@@ -21,14 +21,14 @@ gunzip = src:
 
 hls-wrapper = gunzip (fetchurl {
   curlOpts = ["-L"];
-  url = "https://github.com/haskell/haskell-language-server/releases/download/${version}/haskell-language-server-wrapper-${platform}.gz";
-  hash = hashes."${version}".wrapper;
+  url = refs."${version}"."${platform}".wrapper.url;
+  sha256 = refs."${version}"."${platform}".wrapper.hash;
 });
 
 hls-ghc = gunzip (fetchurl {
   curlOpts = ["-L"];
-  url = "https://github.com/haskell/haskell-language-server/releases/download/${version}/haskell-language-server-${platform}-${ghc}.gz";
-  hash = hashes."${version}"."${ghc}";
+  url = refs."${version}"."${platform}".ghcs."${ghc}".url;
+  sha256 = refs."${version}"."${platform}".ghcs."${ghc}".hash;
 });
 
 builder = writeShellScript
