@@ -14,7 +14,7 @@ gunzip = src:
     '';
   in
   builtins.derivation {
-    system = "x86_64-linux";
+    system = builtins.currentSystem;
     name = "gunzip";
     inherit builder;
   };
@@ -41,7 +41,7 @@ builder = writeShellScript
 in
 
 builtins.derivation {
-  system = "x86_64-linux";
+  system = builtins.currentSystem;
   name = "haskell-language-server-${version}-for-${ghc}-on-${platform}";
 
   inherit builder;
